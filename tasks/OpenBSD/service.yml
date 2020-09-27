@@ -1,0 +1,7 @@
+---
+
+- name: 'start consul service'
+  service:
+    name: 'consul'
+    enabled: True
+    state: 'started'

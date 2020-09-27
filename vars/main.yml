@@ -1,0 +1,51 @@
+---
+
+##############################################################################
+# Configuration
+##############################################################################
+_consul_default_config:
+  data_dir: "{{ _consul_data_dir }}"
+
+##############################################################################
+# Variables
+##############################################################################
+_consul_certs_dir: "{{ _consul_certs_dir_by_os_family[ ansible_facts['os_family'] ] }}"
+_consul_conf_dir: "{{ _consul_conf_dir_by_os_family[ ansible_facts['os_family'] ] }}"
+_consul_data_dir: "{{ _consul_data_dir_by_os_family[ ansible_facts['os_family'] ] }}"
+_consul_pkgs: "{{ _consul_pkgs_by_os_family[ ansible_facts['os_family'] ] }}"
+_consul_root_group: "{{ _consul_root_group_by_os_family[ ansible_facts['os_family'] ] }}"
+_consul_user: "{{ _consul_user_by_os_family[ ansible_facts['os_family'] ] }}"
+_consul_group: "{{ _consul_group_by_os_family[ ansible_facts['os_family'] ] }}"
+
+##############################################################################
+# Distributions' dictionaries
+##############################################################################
+_consul_pkgs_by_os_family:
+  Debian:
+    - 'unzip'
+  OpenBSD:
+    - 'consul'
+
+_consul_root_group_by_os_family:
+  Debian: 'root'
+  OpenBSD: 'wheel'
+
+_consul_user_by_os_family:
+  Debian: 'consul'
+  OpenBSD: '_consul'
+
+_consul_group_by_os_family:
+  Debian: 'consul'
+  OpenBSD: '_consul'
+
+_consul_conf_dir_by_os_family:
+  Debian: '/etc/consul.d'
+  OpenBSD: '/etc/consul.d'
+
+_consul_certs_dir_by_os_family:
+  Debian: '/etc/ssl/consul'
+  OpenBSD: '/etc/ssl/consul'
+
+_consul_data_dir_by_os_family:
+  Debian: '/var/lib/consul'
+  OpenBSD: '/var/consul'

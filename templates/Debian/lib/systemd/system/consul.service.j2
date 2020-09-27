@@ -1,0 +1,54 @@
+[Unit]
+Description=Consul agent {{ consul_artifact_version }}
+Documentation=https://www.consul.io/docs/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+
+; User and group the process will run as
+User={{ _consul_user }}
+Group={{ _consul_group }}
+
+; Start/Restart
+ExecStart=/usr/sbin/consul agent -config-dir={{ _consul_conf_dir }}
+ExecReload=/bin/kill -HUP $MAINPID
+
+; Restart on crash
+Restart=on-failure
+
+; Umask
+UMask=0077
+
+; Kill mode
+KillMode=mixed
+
+; Limits
+LimitNOFILE={{ consul_daemon_nofiles }}
+LimitNPROC={{ consul_daemon_nproc }}
+
+; Use private /tmp and /var/tmp, which are discarded after it stops
+PrivateTmp=true
+; Use a minimal /dev
+PrivateDevices=true
+; Hide /home, /root, and /run/user
+ProtectHome=true
+; Make sure all directories are protected
+ProtectSystem=strict
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+; Cannot change privileges
+NoNewPrivileges=true
+; Deny the creation of writable and executable memory mappings.
+MemoryDenyWriteExecute=true
+
+; Allow to write on following paths
+ReadWritePaths={{ _consul_data_dir }}
+
+; Syslog configuration
+SyslogIdentifier=consul
+
+[Install]
+WantedBy=multi-user.target

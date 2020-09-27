@@ -1,0 +1,30 @@
+---
+
+- name: 'create certs directory'
+  file:
+    path: "{{ _consul_certs_dir }}"
+    owner: 'root'
+    group: "{{ _consul_group }}"
+    mode: '0750'
+    state: 'directory'
+
+- name: 'create certs'
+  copy:
+    content: "{{ item.content }}"
+    dest: "{{ _consul_certs_dir }}/{{ item.name }}"
+    owner: 'root'
+    group: "{{ _consul_group }}"
+    mode: '0640'
+  loop: "{{ consul_config_tls_files }}"
+  notify:
+    - 'consul_restart_handler'
+
+- name: 'create main consul conf file'
+  template:
+    src: 'etc/consul.d/daemon.json.j2'
+    dest: "{{ _consul_conf_dir }}/daemon.json"
+    owner: 'root'
+    group: "{{ _consul_group }}"
+    mode: '0640'
+  notify:
+    - 'consul_restart_handler'

@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  name: 'Converge'
+  become: True
+
+  tasks:
+    - import_role:
+        name: 'ansible-role-consul'
+      vars:
+        consul_config:
+          server: True
+          leave_on_terminate: True
+          skip_leave_on_interrupt: True
+          bootstrap_expect: 1
+          retry_join:
+            - 127.0.0.1

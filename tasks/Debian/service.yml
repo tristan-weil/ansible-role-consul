@@ -1,0 +1,18 @@
+---
+
+- name: 'install systemd service'
+  template:
+    src: 'Debian/lib/systemd/system/consul.service.j2'
+    dest: '/lib/systemd/system/consul.service'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify:
+    - 'consul_restart_handler'
+
+- name: 'start consul service'
+  systemd:
+    name: 'consul'
+    enabled: True
+    daemon_reload: True
+    state: 'started'

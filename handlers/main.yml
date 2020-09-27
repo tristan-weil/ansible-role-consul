@@ -1,0 +1,11 @@
+---
+
+- name: 'consul_restart_handler'
+  service:
+    name: 'consul'
+    state: 'restarted'
+
+- name: 'consul_reload_handler'
+  service:
+    name: 'consul'
+    state: 'reloaded'

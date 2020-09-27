@@ -1,0 +1,1 @@
+{{ _consul_default_config | combine(consul_config, recursive=True) | to_nice_json | regex_replace('"([0-9]+)"', '\\1') }}
