@@ -94,4 +94,4 @@ See [meta/main.yml](https://github.com/tristan-weil/ansible-role-consul/blob/mas
 
 ## License
 
-See [LICENSE.md](https://github.com/tristan-weil/ansible-role-consul/blob/master/LICENSE.md)
+See [LICENSE.md](LICENSE.md)
